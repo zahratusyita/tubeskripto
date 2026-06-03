@@ -74,6 +74,36 @@ document.addEventListener('click', (event) => {
     }
 });
 
+document.addEventListener('submit', (event) => {
+    const form = event.target.closest('[data-login-form]');
+
+    if (!form) {
+        return;
+    }
+
+    const button = form.querySelector('[data-login-button]');
+    const spinner = form.querySelector('[data-login-spinner]');
+    const label = form.querySelector('[data-login-label]');
+    const overlay = document.querySelector('[data-login-overlay]');
+
+    if (button) {
+        button.disabled = true;
+    }
+
+    if (spinner) {
+        spinner.classList.remove('hidden');
+    }
+
+    if (label) {
+        label.textContent = 'Memverifikasi...';
+    }
+
+    if (overlay) {
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+    }
+});
+
 document.addEventListener('click', async (event) => {
     const button = event.target.closest('[data-candidate-lookup]');
 

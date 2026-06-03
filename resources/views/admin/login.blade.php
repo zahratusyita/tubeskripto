@@ -6,7 +6,7 @@
             <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600">Masuk admin memakai NIK/NIM dan kata sandi. Kata sandi disimpan sebagai hash, semua aksi penting tercatat di log audit.</p>
         </div>
 
-        <form method="post" action="{{ route('admin.login.submit') }}" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/70">
+        <form method="post" action="{{ route('admin.login.submit') }}" data-login-form data-turbo="false" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/70">
             @csrf
             <div class="rounded-2xl bg-slate-950 p-5 text-white">
                 <p class="text-sm font-semibold text-emerald-300">Konsol Aman</p>
@@ -26,8 +26,27 @@
                 </div>
             </div>
 
-            <button class="mt-6 w-full rounded-xl bg-emerald-600 px-5 py-3 font-black text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-700">Masuk Dasbor</button>
+            <button data-login-button class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 font-black text-white shadow-lg shadow-emerald-600/20 transition hover:bg-emerald-700 disabled:cursor-wait disabled:opacity-80">
+                <svg data-login-spinner class="hidden h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+                <span data-login-label>Masuk Dasbor</span>
+            </button>
             <p class="mt-4 rounded-xl bg-slate-50 p-3 text-xs leading-5 text-slate-500">Akun seed: <strong>F1D02410053</strong> / <strong>admin12345</strong></p>
         </form>
     </section>
+
+    <div data-login-overlay class="fixed inset-0 z-[80] hidden items-center justify-center bg-slate-950/45 px-4 backdrop-blur-sm">
+        <div class="w-full max-w-sm rounded-3xl border border-white/20 bg-white p-6 text-center shadow-2xl shadow-slate-950/30">
+            <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+                <svg class="h-8 w-8 animate-spin" viewBox="0 0 24 24" fill="none">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+            </div>
+            <h2 class="mt-4 text-lg font-black text-slate-950">Memverifikasi Admin</h2>
+            <p class="mt-2 text-sm leading-6 text-slate-500">Mohon tunggu, sistem sedang mengecek NIK/NIM dan kata sandi.</p>
+        </div>
+    </div>
 </x-layouts.app>

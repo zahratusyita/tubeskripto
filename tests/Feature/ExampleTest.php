@@ -33,6 +33,17 @@ class ExampleTest extends TestCase
         $this->assertAuthenticated();
     }
 
+    public function test_authenticated_admin_is_redirected_away_from_login_page(): void
+    {
+        $this->seed();
+
+        $admin = User::where('identity_number', 'F1D02410053')->firstOrFail();
+
+        $this->actingAs($admin)
+            ->get('/admin/login')
+            ->assertRedirect('/admin/dashboard');
+    }
+
     public function test_vote_is_stored_as_anonymous_encrypted_ballot(): void
     {
         $this->seed();
