@@ -54,6 +54,74 @@ const platformTemplates = [
     },
 ];
 
+function resetOverlay(overlay) {
+    if (!overlay) {
+        return;
+    }
+
+    overlay.classList.add('hidden');
+    overlay.classList.remove('flex');
+}
+
+function resetLoginState() {
+    document.querySelectorAll('[data-login-form]').forEach((form) => {
+        const button = form.querySelector('[data-login-button]');
+        const spinner = form.querySelector('[data-login-spinner]');
+        const label = form.querySelector('[data-login-label]');
+
+        if (button) {
+            button.disabled = false;
+        }
+
+        if (spinner) {
+            spinner.classList.add('hidden');
+        }
+
+        if (label) {
+            label.textContent = 'Masuk Dasbor';
+        }
+    });
+
+    resetOverlay(document.querySelector('[data-login-overlay]'));
+}
+
+function resetVoterLookupState() {
+    document.querySelectorAll('[data-voter-lookup-form]').forEach((form) => {
+        const button = form.querySelector('[data-voter-lookup-button]');
+        const spinner = form.querySelector('[data-voter-lookup-spinner]');
+        const label = form.querySelector('[data-voter-lookup-label]');
+        const arrow = form.querySelector('[data-voter-lookup-arrow]');
+
+        if (button) {
+            button.disabled = false;
+        }
+
+        if (spinner) {
+            spinner.classList.add('hidden');
+        }
+
+        if (arrow) {
+            arrow.classList.remove('hidden');
+        }
+
+        if (label) {
+            label.textContent = 'Cek Hak Pilih Saya';
+        }
+    });
+
+    resetOverlay(document.querySelector('[data-voter-lookup-overlay]'));
+}
+
+function resetTransientUiState() {
+    resetLoginState();
+    resetVoterLookupState();
+}
+
+window.addEventListener('pageshow', resetTransientUiState);
+document.addEventListener('turbo:load', resetTransientUiState);
+document.addEventListener('turbo:render', resetTransientUiState);
+document.addEventListener('turbo:before-cache', resetTransientUiState);
+
 document.addEventListener('click', (event) => {
     const button = event.target.closest('[data-random-photo]');
 
