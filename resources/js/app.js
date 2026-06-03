@@ -104,6 +104,41 @@ document.addEventListener('submit', (event) => {
     }
 });
 
+document.addEventListener('submit', (event) => {
+    const form = event.target.closest('[data-voter-lookup-form]');
+
+    if (!form) {
+        return;
+    }
+
+    const button = form.querySelector('[data-voter-lookup-button]');
+    const spinner = form.querySelector('[data-voter-lookup-spinner]');
+    const label = form.querySelector('[data-voter-lookup-label]');
+    const arrow = form.querySelector('[data-voter-lookup-arrow]');
+    const overlay = document.querySelector('[data-voter-lookup-overlay]');
+
+    if (button) {
+        button.disabled = true;
+    }
+
+    if (spinner) {
+        spinner.classList.remove('hidden');
+    }
+
+    if (arrow) {
+        arrow.classList.add('hidden');
+    }
+
+    if (label) {
+        label.textContent = 'Mengecek data...';
+    }
+
+    if (overlay) {
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+    }
+});
+
 document.addEventListener('click', async (event) => {
     const button = event.target.closest('[data-candidate-lookup]');
 

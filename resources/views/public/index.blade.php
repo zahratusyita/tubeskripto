@@ -32,7 +32,7 @@
                     <p class="mt-2 text-sm leading-relaxed text-slate-500">Silakan masukkan NIK/NIM Anda untuk memverifikasi hak pilih sebelum masuk ke bilik suara virtual.</p>
                 </div>
 
-                <form class="space-y-5 sm:space-y-6" method="post" action="{{ route('voter.lookup') }}">
+                <form class="space-y-5 sm:space-y-6" method="post" action="{{ route('voter.lookup') }}" data-voter-lookup-form data-turbo="false">
                     @csrf
                     <div>
                         <label class="block text-sm font-bold text-slate-700" for="identity_number">Nomor Induk Kependudukan (NIK)</label>
@@ -57,9 +57,13 @@
                         @enderror
                     </div>
                     
-                    <button class="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3.5 sm:py-4 text-base font-black text-white shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:scale-[1.02] hover:shadow-emerald-500/50">
-                        <span>Cek Hak Pilih Saya</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="size-5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
+                    <button data-voter-lookup-button class="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3.5 sm:py-4 text-base font-black text-white shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:scale-[1.02] hover:shadow-emerald-500/50 disabled:cursor-wait disabled:opacity-85 disabled:hover:scale-100">
+                        <svg data-voter-lookup-spinner class="hidden size-5 animate-spin" viewBox="0 0 24 24" fill="none">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                        </svg>
+                        <span data-voter-lookup-label>Cek Hak Pilih Saya</span>
+                        <svg data-voter-lookup-arrow xmlns="http://www.w3.org/2000/svg" class="size-5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
                     </button>
@@ -74,6 +78,19 @@
                         Sistem memisahkan data identitas dengan isi suara. Panitia hanya mengetahui siapa yang telah memilih, tanpa bisa melihat pilihan Anda.
                     </p>
                 </div>
+            </div>
+        </div>
+
+        <div data-voter-lookup-overlay class="fixed inset-0 z-[80] hidden items-center justify-center bg-slate-950/45 px-4 backdrop-blur-sm">
+            <div class="w-full max-w-sm rounded-3xl border border-white/20 bg-white p-6 text-center shadow-2xl shadow-slate-950/30">
+                <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+                    <svg class="h-8 w-8 animate-spin" viewBox="0 0 24 24" fill="none">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                    </svg>
+                </div>
+                <h2 class="mt-4 text-lg font-black text-slate-950">Mengecek Hak Pilih</h2>
+                <p class="mt-2 text-sm leading-6 text-slate-500">Mohon tunggu, sistem sedang mencocokkan NIK/NIM dengan data pemilih.</p>
             </div>
         </div>
 
