@@ -39,7 +39,7 @@
         <header @auth id="admin-navbar" data-turbo-permanent @endauth class="sticky top-0 z-50 border-b border-slate-200/50 bg-white/70 backdrop-blur-xl">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex min-h-16 items-center justify-between gap-4">
-                    <a href="{{ route('home') }}" class="group flex min-w-0 shrink-0 items-center gap-3">
+                    <a href="{{ route('home') }}" data-turbo="false" class="group flex min-w-0 shrink-0 items-center gap-3">
                         <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-sm font-black text-white shadow-lg shadow-emerald-500/20 group-hover:rotate-12 transition-transform duration-300">SV</span>
                         <span class="flex min-w-0 flex-col justify-center">
                             <span class="block truncate text-sm font-bold leading-tight tracking-wide text-slate-900 transition-colors group-hover:text-emerald-700">SecureVote Desa</span>
@@ -58,7 +58,7 @@
                                 </span>
                             </div>
                         @else
-                            <a class="admin-nav-action" href="{{ route('admin.login') }}">Area Admin</a>
+                            <a class="admin-nav-action" href="{{ route('admin.login') }}" data-turbo="false">Area Admin</a>
                         @endif
                     @endguest
 
