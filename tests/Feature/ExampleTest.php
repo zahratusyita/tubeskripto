@@ -106,4 +106,33 @@ class ExampleTest extends TestCase
                 'full_name' => 'ANDRA ATHAR RIZQA',
             ]);
     }
+
+    public function test_admin_can_reset_demo_voting_data(): void
+    {
+        $this->seed();
+
+        $admin = User::where('identity_number', 'F1D02410053')->firstOrFail();
+        $voter = Voter::where('identity_number', 'F1D02410036')->firstOrFail();
+
+        $this->post('/lookup', [
+            'identity_number' => $voter->identity_number,
+        ]);
+
+        $this->post('/vote', [
+            'candidate_id' => 1,
+        ]);
+
+        Election::firstOrFail()->update([
+            'status' => 'closed',
+            'ended_at' => now(),
+        ]);
+
+        $this->actingAs($admin)
+            ->post('/admin/election/reset-demo')
+            ->assertRedirect();
+
+        $this->assertSame(0, Ballot::count());
+        $this->assertSame(0, Voter::where('has_voted', true)->count());
+        $this->assertSame('open', Election::firstOrFail()->status);
+    }
 }

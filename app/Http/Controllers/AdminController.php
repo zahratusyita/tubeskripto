@@ -199,6 +199,33 @@ class AdminController extends Controller
         return back()->with('status', 'Status pemilihan berhasil diperbarui.');
     }
 
+    public function resetDemo(): RedirectResponse
+    {
+        $ballotCount = Ballot::count();
+        $votedCount = Voter::where('has_voted', true)->count();
+
+        DB::transaction(function (): void {
+            Ballot::query()->delete();
+            Voter::query()->update([
+                'has_voted' => false,
+                'voted_at' => null,
+            ]);
+
+            Election::query()->update([
+                'status' => 'open',
+                'started_at' => now(),
+                'ended_at' => null,
+            ]);
+        });
+
+        $this->log(
+            'Reset data demo',
+            'Menghapus '.$ballotCount.' surat suara dan mengembalikan '.$votedCount.' pemilih ke status belum memilih.'
+        );
+
+        return back()->with('status', 'Data demo berhasil direset. Semua pemilih kembali belum memilih dan pemilihan dibuka.');
+    }
+
     public function tally(RsaVoteService $rsa): View
     {
         $election = Election::with(['candidates', 'rsaKey'])->withCount('ballots')->firstOrFail();

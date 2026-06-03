@@ -27,6 +27,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::put('/candidates/{candidate}', [AdminController::class, 'updateCandidate'])->name('candidates.update');
     Route::delete('/candidates/{candidate}', [AdminController::class, 'deleteCandidate'])->name('candidates.delete');
     Route::patch('/election/status', [AdminController::class, 'updateElectionStatus'])->name('election.status');
+    Route::post('/election/reset-demo', [AdminController::class, 'resetDemo'])->name('election.reset-demo');
     Route::get('/tally', [AdminController::class, 'tally'])->name('tally');
     Route::get('/proof', [AdminController::class, 'proof'])->name('proof');
 });

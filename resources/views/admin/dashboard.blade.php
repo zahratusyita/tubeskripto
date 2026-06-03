@@ -115,6 +115,29 @@
             </div>
         </div>
 
+        <div class="mt-6 rounded-3xl border border-rose-100 bg-rose-50/80 p-5 shadow-sm animate-fade-in-up delay-150">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div class="flex items-start gap-3">
+                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-rose-600 shadow-sm">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v6h6M20 20v-6h-6M5 19A9 9 0 0119 5m0 0h-5m5 0v5" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs font-black uppercase tracking-wider text-rose-700">Mode Testing Admin</p>
+                        <h2 class="mt-1 text-lg font-black text-slate-950">Reset Data Demo dari Awal</h2>
+                        <p class="mt-1 max-w-3xl text-sm leading-relaxed text-rose-700/80">Menghapus semua surat suara, mengembalikan semua pemilih menjadi belum memilih, dan membuka ulang pemilihan. Data pemilih, calon, admin, dan audit tetap disimpan.</p>
+                    </div>
+                </div>
+                <form method="post" action="{{ route('admin.election.reset-demo') }}" data-turbo="false" onsubmit="return confirm('Reset data demo? Semua surat suara akan dihapus dan semua pemilih menjadi belum memilih. Data calon dan pemilih tetap ada.')">
+                    @csrf
+                    <button class="w-full whitespace-nowrap rounded-xl border border-rose-200 bg-white px-5 py-3 text-sm font-black text-rose-700 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-rose-600 hover:text-white hover:shadow-lg hover:shadow-rose-500/20 lg:w-auto">
+                        Reset Sekarang
+                    </button>
+                </form>
+            </div>
+        </div>
+
         <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 animate-fade-in-up delay-150">
             <x-stat-card label="Total Pemilih" :value="$totalVoters" />
             <x-stat-card label="Sudah Memilih" :value="$votedCount" tone="emerald" />
